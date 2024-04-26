@@ -32,23 +32,30 @@ public class FamilyTree
         void addChild(TreeNode childNode)
         {
             // Add childNode to this node's children list. Also
+			children.add(childNode);
             // set childNode's parent to this node.
+			childNode.parent = this;
         }
         
         
         // Searches subtree at this node for a node
         // with the given name. Returns the node, or null if not found.
-        TreeNode getNodeWithName(String targetName)
-        {
-            // Does this node have the target name?
-            if (?????)
-                return this;
+        TreeNode getNodeWithName(String targetName) {
+			// Does this node have the target name?
+			if (this.name.equals(targetName))
+			{
+				return this;
+		}
                     
             // No, recurse. Check all children of this node.
             for (TreeNode child: children)
             {
                 // If child.getNodeWithName(targetName) returns a non-null node,
                 // then that's the node we're looking for. Return it.
+				TreeNode result = child.getNodeWithName(name);
+				if (result != null){
+					return result;
+				}
             }
             
             // Not found anywhere.
@@ -61,6 +68,12 @@ public class FamilyTree
         ArrayList<TreeNode> collectAncestorsToList()
         {
             ArrayList<TreeNode> ancestors = new ArrayList<>();
+			TreeNode current = this.parent;
+			while (current != null) {
+				ancestors.add(current);
+				current = current.parent;
+			}
+
 
             // ?????  Collect ancestors of this TreeNode into the array list. HINT: going up
             // the nodes of a tree is like traversing a linked list. If that isn’t clear,
